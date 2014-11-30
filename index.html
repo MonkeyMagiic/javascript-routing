@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- <html ng-app="project"> -->
+<html ng-app="app">
+<head>
+    <link rel="stylesheet" href="bootstrap.css">
+
+    <!-- inject-vendor:css -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="bower_components/toastr/toastr.css" rel="stylesheet"/>
+    <!-- endinject -->
+</head>
+<body>
+<h2>Call Care</h2>
+
+<div ng-view></div>
+
+<!-- inject-vendor:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-animate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-resource.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-sanitize.js"></script>
+<script src="bower_components/angular-google-plus/dist/angular-google-plus.js"></script>
+<script src="bower_components/toastr/toastr.js"></script>
+<script src="bower_components/extras.angular.plus/ngplus-overlay.js"></script>
+
+<!-- inject:js -->
+<!-- Bootstrapping -->
+<script src="app/app.module.js"></script>
+
+<!-- core module -->
+<script src="app/core/core.module.js"></script>
+<script src="app/core/constants.js"></script>
+<script src="app/core/config.js"></script>
+<script src="app/core/dataservice.js"></script>
+
+<!-- blocks -->
+<script src="app/blocks/logger/logger.module.js"></script>
+<script src="app/blocks/logger/logger.js"></script>
+<script src="app/blocks/exception/exception.module.js"></script>
+<script src="app/blocks/exception/exception-handler.provider.js"></script>
+<script src="app/blocks/exception/exception.js"></script>
+
+<!--widgets-->
+<script src="app/widgets/widgets.module.js"></script>
+<script src="app/widgets/filterSelect.js"></script>
+
+<!-- common module -->
+<script src="app/controllers/listProjectController.js"></script>
+<script src="app/controllers/editProjectController.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<input type="text" ng-model="search" class="search-query" placeholder="Search">
+<table>
+    <thead>
+    <tr>
+        <th>Project</th>
+        <th>Description</th>
+        <th><a href="#/new"><i class="icon-plus-sign"></i></a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="project in vm.projects | filter:search | orderBy:'name'">
+        <td><a ng-href="{{project.site}}" target="_blank">{{project.name}}</a></td>
+        <td>{{project.description}}</td>
+        <td>
+            <a ng-href="#/edit/{{project.$id}}"><i class="icon-pencil"></i></a>
+        </td>
+    </tr>
+
+    <p>{{vm.counter}}</p>
+
+    <select ng-model="vm.autoSelect">
+        <option value="always">Always</option>
+        <option value="partial">Partial</option>
+        <option value="complete">Complete</option>
+        <option value="never">Never</option>
+    </select>
+
+    <filter-select source-provider="vm.currencyPairs" auto-select="{{vm.autoSelect}}"/>
+    </tbody>
+</table>
