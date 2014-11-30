@@ -23,6 +23,13 @@
         };
         return directive;
 
+        /**
+         * @private
+         * @param scope
+         * @param element
+         * @param attributes
+         * @param controller
+         */
         function link(scope, element, attributes, controller) {
 
             //the '@' binding automatically interpolates the "{{}}" if they exist in the attributes

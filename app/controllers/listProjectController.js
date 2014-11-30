@@ -6,6 +6,16 @@
 
     var injectParameters = ['$interval', 'dataservice', 'logger'];
 
+    /**
+     *  ListProjectController
+     *
+     *  @see
+     *
+     *  @langversion 3.0
+     *  @playerversion Flash 9
+     *  @playerversion AIR 1.1
+     *  @productversion Flex 3
+     */
     function ListProjectController($interval, dataservice, logger) {
 
         //--------------------------------------------------------------------------
@@ -38,8 +48,11 @@
         var _currencyPairs;
 
         /**
-         *  The currencyPairs of the component.
-         *  @langversion ecmaScript 5.0
+         * @name app.ListProjectController#currencyPairs
+         * @module app
+         * @returns {Array.<string>} List of currency pairs.
+         * @description
+         * Holds the list of currency pairs.
          */
         Object.defineProperty(vm, 'currencyPairs', {
             get: function () {
