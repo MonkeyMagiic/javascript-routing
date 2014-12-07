@@ -67,13 +67,21 @@
 
         /**
          *  Storage for the autoSelect property.
-         *  @default always
          *  @private
          */
         var _autoSelect = "always";
 
         /**
          *  The autoSelect of the component.
+         *  @default always
+         *
+         *  <p>Supported values</p>
+         *         always
+         *         complete
+         *          <li>partial
+         *          <li>never</li>
+         *      </ul>
+         *
          *  @langversion ecmaScript 5.0
          */
         Object.defineProperty(vm, 'autoSelect', {

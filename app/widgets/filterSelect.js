@@ -8,6 +8,21 @@
         .module('app.widgets')
         .directive('filterSelect', filterSelect);
 
+    /**
+     * Add querySelectorAll() to jqLite.
+     *
+     * jqLite find() is limited to lookups by tag name.
+     * TODO This will change with future versions of AngularJS, to be removed when this happens
+     *
+     * See jqLite.find - why not use querySelectorAll? https://github.com/angular/angular.js/issues/3586
+     * See feat(jqLite): use querySelectorAll instead of getElementsByTagName in jqLite.find https://github.com/angular/angular.js/pull/3598
+     */
+    if (angular.element.prototype.querySelectorAll === undefined) {
+        angular.element.prototype.querySelectorAll = function (selector) {
+            return angular.element(this[0].querySelectorAll(selector));
+        };
+    }
+
     function filterSelect() {
 
         var directive = {
@@ -15,11 +30,28 @@
             controllerAs: 'vm',
             link: link,
             restrict: 'E',  //E = element, A = attribute, C = class, M = comment
+            transclude: true,
             scope: {
                 sourceProvider: '=',
                 autoSelect: '@'
             },
-            template: '<select data-ng-model="vm.selectedItem" data-ng-options="item.name for item in vm.dataProvider"></select>'
+            template: ' <button type="button" class="btn btn-default form-control ui-select-match" tabindex="-1" ng-class="{\'btn-default-focus\':vm.focus}"' +
+            '                   ng-hide="vm.isOpen" ng-disabled="vm.disabled" ng-click="vm.open()"> ' +
+            '               <span ng-show="vm.isEmpty()" class="text-muted">{{vm.placeholder}}</span> ' +
+            '               <span ng-hide="vm.isEmpty()" ng-transclude></span>' +
+            '               <span class="caret ui-select-toggle" ng-click="vm.toggle($event)"></span> ' +
+            '           </button>' +
+            '           <div class="ui-select-bootstrap dropdown" ng-class="{open: vm.isOpen}"> ' +
+            '           <div class="ui-select-match"></div>' +
+            '               <input type="text" autocomplete="off" tabindex="-1" ' +
+            '                   class="form-control ' +
+            '                   ui-select-search" ' +
+            '                   placeholder="{{vm.placeholder}}" ' +
+            '                   ng-model="vm.search" ' +
+            '                   ng-show="vm.searchEnabled && vm.isOpen"> ' +
+            '               <div class="ui-select-choices"></div>' +
+            '           </div>'
+
         };
         return directive;
 
@@ -52,9 +84,37 @@
             });
         }
 
-        function controller($scope) {
+        function controller($scope, $element) {
+
+            var _searchInput = $element.querySelectorAll('input.ui-select-search');
+            if (_searchInput.length !== 1) {
+                throw new Error("Expected 1 input.ui-select-search but got '{0}'.");
+            }
+
             /* jshint validthis: true */
             var vm = this;
+            vm.placeholder = "Please select something";
+            vm.open = function () {
+                if (_isOpen) return;
+                _isOpen = true;
+            }
+
+            vm.isEmpty = function () {
+                return angular.isUndefined(_selectedItem) || _selectedItem === null || _selectedItem === '';
+            };
+
+            /*
+            focusser.bind("focus", function () {
+                scope.$evalAsync(function () {
+                    $select.focus = true;
+                });
+            });
+            focusser.bind("blur", function () {
+                scope.$evalAsync(function () {
+                    $select.focus = false;
+                });
+            });
+            */
 
             //--------------------------------------------------------------------------
             //
@@ -85,24 +145,24 @@
 
 
             //----------------------------------
-            //  open
+            //  isOpen
             //----------------------------------
 
             /**
-             *  Storage for the open property.
+             *  Storage for the isOpen property.
              *  @private
              */
-            var _open;
+            var _isOpen;
 
             /**
-             * @name app.controller#open
+             * @name app.controller#isOpen
              * @module app
              * @returns {Boolean}
              * @description ?
              */
-            Object.defineProperty(vm, 'open', {
+            Object.defineProperty(vm, 'isOpen', {
                 get: function () {
-                    return _open;
+                    return _isOpen;
                 }
             });
 
@@ -131,6 +191,32 @@
                     _dataProvider = value;
                 }
             });
+
+            //----------------------------------
+            //  searchEnabled
+            //----------------------------------
+
+            /**
+             *  Storage for the selectedItem property.
+             *  @private
+             */
+            var _searchEnabled = true;
+
+            /**
+             * @name app.controller#searchEnabled
+             * @module app
+             * @returns {Object}
+             * @description ?
+             */
+            Object.defineProperty(vm, 'searchEnabled', {
+                get: function () {
+                    return _searchEnabled;
+                },
+                set: function (value) {
+                    _searchEnabled = value;
+                }
+            });
         }
+
     }
 })();
