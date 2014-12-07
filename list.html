@@ -16,8 +16,6 @@
         </td>
     </tr>
 
-    <p>{{vm.counter}}</p>
-
     <select ng-model="vm.autoSelect">
         <option value="always">Always</option>
         <option value="partial">Partial</option>
@@ -25,8 +23,11 @@
         <option value="never">Never</option>
     </select>
 
+    <p>{{vm.counter}}</p>
+
     <filter-select source-provider="vm.currencyPairs" auto-select="{{vm.autoSelect}}"></filter-select>
 
+    <!--
     <p>
         <button type="button" class="btn btn-lg btn-default">Default</button>
         <button type="button" class="btn btn-lg btn-primary">Primary</button>
@@ -36,6 +37,7 @@
         <button type="button" class="btn btn-lg btn-danger">Danger</button>
         <button type="button" class="btn btn-lg btn-link">Link</button>
     </p>
+    -->
 
     </tbody>
 </table>
