@@ -1,0 +1,20 @@
+<table>
+    <tbody>
+
+
+    <filter-select
+            source-provider="vm.currencyPairs"
+            selected-item="vm.selectedCurrencyPair"
+            auto-select="{{vm.autoSelect}}"
+            label-field="name">
+    </filter-select>
+
+    <select ng-model="vm.autoSelect">
+        <option value="always">Always</option>
+        <option value="partial">Partial</option>
+        <option value="complete">Complete</option>
+        <option value="never">Never</option>
+    </select>
+
+    </tbody>
+</table>

@@ -4,10 +4,10 @@
 (function () {
     "use strict";
 
-    var injectParameters = ['$interval', 'dataservice', 'logger'];
+    var injectParameters = ['dataservice', 'logger'];
 
     /**
-     *  ListProjectController
+     *  ComponentsController
      *
      *  @see
      *
@@ -16,7 +16,7 @@
      *  @playerversion AIR 1.1
      *  @productversion Flex 3
      */
-    function ListProjectController($interval, dataservice, logger) {
+    function ComponentsController(dataservice, logger) {
 
         //--------------------------------------------------------------------------
         //
@@ -24,7 +24,7 @@
         //
         //--------------------------------------------------------------------------
 
-        logger.info("Loading contact data", {});
+        logger.info("Loading components controller", {});
 
         var vm = this;
 
@@ -60,6 +60,32 @@
             }
         });
 
+
+        //----------------------------------
+        //  selectedCurrencyPair
+        //----------------------------------
+
+        /**
+         *  Storage for the selectedCurrencyPair property.
+         *  @private
+         */
+        var _selectedCurrencyPair;
+
+        /**
+         *  The selectedCurrencyPair.
+         *
+         *  @langversion ecmaScript 5.0
+         */
+        Object.defineProperty(vm, 'selectedCurrencyPair', {
+            get: function () {
+                return _selectedCurrencyPair;
+            },
+            set: function (value) {
+                _selectedCurrencyPair = value;
+            }
+        });
+
+
         //----------------------------------
         //  autoSelect
         //----------------------------------
@@ -75,12 +101,11 @@
          *  @default complete
          *
          *  <p>Supported values</p>
-         *     <ul>
-         *      <li>always</li>
-         *      <li>complete</li>
-         *      <li>partial</li>
-         *      <li>never</li>
-         *     </ul>
+         *          <li>always</li>
+         *          <li>complete</li>
+         *          <li>partial</li>
+         *          <li>never</li>
+         *      </ul>
          *
          *  @langversion ecmaScript 5.0
          */
@@ -93,45 +118,6 @@
             }
         });
 
-        //----------------------------------
-        //  projects
-        //----------------------------------
-
-        /**
-         *  Storage for the projects property.
-         *  @private
-         */
-        var _projects;
-
-        /**
-         *  The projects of the component.
-         *  @langversion ecmaScript 5.0
-         */
-        Object.defineProperty(vm, 'projects', {
-            get: function () {
-                return _projects;
-            }
-        });
-
-        //----------------------------------
-        //  counter
-        //----------------------------------
-
-        /**
-         *  Storage for the counter property.
-         *  @private
-         */
-        var _counter = NaN;
-
-        /**
-         *  The counter of the component.
-         *  @langversion 3.0
-         */
-        Object.defineProperty(vm, 'counter', {
-            get: function () {
-                return _counter;
-            }
-        });
 
         //--------------------------------------------------------------------------
         //
@@ -146,16 +132,12 @@
         function initialise() {
 
             _currencyPairs = dataservice.getCurrencyPairs();
-            _projects = dataservice.getProjects();
-
-            $interval(function () {
-                _counter = Math.round(Math.random() * 1000);
-            }, 1000);
+            _selectedCurrencyPair = _currencyPairs[2];
         }
     }
 
-    ListProjectController.$inject = injectParameters;
+    ComponentsController.$inject = injectParameters;
 
-    angular.module('app').controller('ListProjectController', ListProjectController);
+    angular.module('app').controller('ComponentsController', ComponentsController);
 
 }());

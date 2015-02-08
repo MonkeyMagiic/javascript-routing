@@ -29,6 +29,11 @@
 
         $routeProvider
             .when('/', {
+                controller: 'ComponentsController',
+                controllerAs: 'vm',
+                templateUrl: 'components.html'
+            })
+            .when('/list', {
                 controller: 'ListProjectController',
                 controllerAs: 'vm',
                 templateUrl: 'list.html'
